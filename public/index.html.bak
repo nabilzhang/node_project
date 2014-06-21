@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>电影情绪值</title>
+
+    <script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        //查询
+        function search(name) {
+            var options = {
+                chart: {
+                    renderTo: 'chart',
+                    type: 'spline'
+                },
+                title:"",
+                subtitle: {
+                    text: '情绪曲线'
+                },
+                xAxis: {
+                    categories: ['时间'],
+                    tickInterval:100
+                },
+                yAxis: {
+                    title: {
+                        text: '情绪值'
+                    }
+                },
+                series: [
+                        {
+                            name: "情绪值"
+                        }
+                ],
+                tooltip: {
+                    formatter: function () {
+                        return '时间:<b>' + this.x + '</b><br/>情绪值:<b>' + this.y + '</b>';
+                    }
+                },
+                legend: {
+                    align: 'left',
+                    verticalAlign: 'top',
+                    y: 20,
+                    floating: true,
+                    borderWidth: 1
+                },
+                plotOptions: {
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    $("#image img").attr("src", "/films/1/jpg/"+this.x);
+                                }
+                            }
+                        },
+                        marker: {
+                            lineWidth: 1
+                        },
+                        turboThreshold:0
+                    }
+                }
+            };
+            $.getJSON('../js/data.js', function (data) {
+                options.series[0].data = data;
+                var chart = new Highcharts.Chart(options);
+            });
+        }
+
+        $(document).ready(function () {
+            var options = {
+                chart: {
+                    renderTo: 'chart',
+                    type: 'spline'
+                },
+                title: ""
+            }
+            var chart = new Highcharts.Chart(options);
+
+            //点击查询
+            $("#queryBtn").bind({
+                click: function () {
+                    var name = $("#query").val();
+                    if (name != '') {
+                        search(name);
+                    }
+                }
+            });
+
+            //
+            $('.film').click(function () {
+                var filmId = $(this).attr("filmId");
+                $('#selector li').css("background","#eee");
+                $(this).parent().css("background","#ddd");
+                search(filmId);
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            font-size: 12px;;
+            height: 100%;
+            color: #666666;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+
+        #container {
+            min-width: 310px;
+            height: 600px;
+            width: 100%;
+            border: 1px #ddd solid;
+        }
+        #chart {
+            min-width: 310px;
+            width: 50%;
+            height: 100%;
+            margin: 0 auto;
+            text-align: center;
+            vertical-align: middle;
+            color: #ddd;
+            float: left;
+        }
+
+        #selector {
+            float: left;
+            width: 19%;
+            height: 100%;
+            border-right: 1px solid #ddd;
+            overflow-x: hidden;
+        }
+
+        #selector ul {
+            list-style: none;
+            padding: 0;;
+        }
+
+        #selector li {
+            list-style: none;
+            border: 1px solid #dddddd;
+            background: #eeeeee;
+            margin: 3px;
+            padding: 5px;
+        }
+
+        #selector li a {
+            display: block;
+            text-decoration: none;
+            color: #666;
+        }
+
+        #selector li a span, img {
+            line-height: 50px;
+            vertical-align: text-top;
+        }
+
+        #image {
+            width: 30%;
+            float: left;
+            height: 100%;
+            margin: 0 auto;
+            text-align: center;
+            margin-left: 1px;
+            border-left: 1px solid #dddddd;
+        }
+        #image img{
+            width: 100%;
+            height: 200px;
+            border: none;
+            background: #eeeeee;
+            background: url("../img/scene.png");
+            background-size:auto 200px;
+            background-repeat:no-repeat;
+        }
+
+        #introduction{
+            text-align: left;
+            font-size: 1.2em;
+            padding: 5px;
+        }
+        #introduction p{
+            text-indent: 2em;
+        }
+
+        .selected{
+            background: #ccc;
+        }
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <script src="../js/highcharts.src.js"></script>
+    <script src="../js/modules/data.js"></script>
+    <script src="../js/modules/exporting.js"></script>
+
+    <div id="container">
+        <div id="selector">
+            <ul>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="film" filmId="1" href="javascript:void(0)">
+                        <img style="width:100px;height: 50px;"
+                             src="../img/1.png"/>
+                        <span>冰与火之歌：权力的游戏 第一季</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="chart">
+            暂无数据
+        </div>
+        <div id="image">
+            <img src="" alt=""/>
+            <div id="introduction">
+                <h1>电影介绍</h1>
+                <p>《权力的游戏》这部电视剧由导演戴维·贝尼奥夫（David Benioff）、D.B. Weiss执导，戴维·贝尼奥夫 、 乔治。
+                    R.R.马丁编剧，伊萨克·亨普斯特德-怀特、查里斯·丹斯、John Bradley、罗恩·多纳基、Ian McElhinney、
+                    肖恩·宾、Michelle Fairley、Emilia  Clarke、伊恩·格雷、Kit Harington、尼可拉·科斯特-瓦尔道主演。
+                    该剧是将正统史诗奇幻剧搬在电视网上的首部电视剧，剧情根据George R. R. Martin的系列畅销小说《冰与火之歌》七部曲为基础改编创作而成。</p>
+                <table>
+                    <tr>
+                        <td>导演</td>
+                        <td>戴维·贝尼奥夫、D.B. Weiss</td>
+                    </tr>
+                    <tr>
+                        <td>单集片长</td>
+                        <td>60分钟</td>
+                    </tr>
+                    <tr>
+                        <td>主演</td>
+                        <td>伊萨克·亨普斯特德-怀特，查里斯·丹斯，John Bradley，罗恩·多纳基，Ian McElhinney，肖恩·宾</td>
+                    </tr>
+                    <tr>
+                        <td>制片地区</td>
+                        <td>美国</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+
+</body>
+</html>
